@@ -63,13 +63,17 @@ fn engine(src: &[u8]) -> std::io::Result<()> {
             DEC => mem[dp] = mem[dp].wrapping_sub(1),
             PUT => print!("{}", mem[dp] as char),
             INP => std::io::stdin().read_exact(std::array::from_mut(&mut mem[dp]))?,
-            LBR => if mem[dp] == 0 {
-                ip = jmp[ip] as usize;
-                continue;
+            LBR => {
+                if mem[dp] == 0 {
+                    ip = jmp[ip] as usize;
+                    continue;
+                }
             }
-            RBR => if mem[dp] != 0 {
-                ip = jmp[ip] as usize;
-                continue;
+            RBR => {
+                if mem[dp] != 0 {
+                    ip = jmp[ip] as usize;
+                    continue;
+                }
             }
             _ => {}
         }
@@ -89,4 +93,3 @@ fn main() -> std::io::Result<()> {
 
     Ok(())
 }
-
